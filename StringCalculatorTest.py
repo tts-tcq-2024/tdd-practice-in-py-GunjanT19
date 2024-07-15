@@ -1,3 +1,9 @@
+import pytest
+from StringCalculator import StringCalculator  # Correct import statement
+
+def test_empty_string():
+    assert StringCalculator.add("") == 0
+
 def test_single_number():
     assert StringCalculator.add("1") == 1
 
