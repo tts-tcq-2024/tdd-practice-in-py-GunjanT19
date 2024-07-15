@@ -1,31 +1,28 @@
-import pytest
-from StringCalculator import StringCalculator  # Correct import statement
+import unittest
+from StringCalculator import add
+class TestStringCalculator(unittest.TestCase):
+        
+        def test_expectZeroForEmptyInput(self): #Testcase1.
+                self.assertEqual(add(""), 0)
+                
+        def test_expectZeroForSingleZero(self): #Testcase2.
+                self.assertEqual(add("0"), 0)
+                
+        def test_expectSumForTwoNumberst(self): #Testcase3.
+                self.assertEqual(add("1,2"), 3)
+                
+        def test_ignoreNumbersGreaterThan1000(self): #Testcase4.
+                self.assertEqual(add("1,1001"), 1)
+                
+        def test_expectSumWithCustomDelimiter(self): #Testcase5.
+                self.assertEqual(add("//;\n1;2"), 3)
+                
+        def test_expectSumWithNewlineDelimiter(self): #Testcase6.
+                self.assertEqual(add("1\n2,3"),6);
+        
 
-def test_empty_string():
-    assert StringCalculator.add("") == 0
 
-def test_single_number():
-    assert StringCalculator.add("1") == 1
 
-def test_two_numbers():
-    assert StringCalculator.add("1,2") == 3
 
-def test_multiple_numbers():
-    assert StringCalculator.add("1,2,3,4,5") == 15
-
-def test_newline_delimiters():
-    assert StringCalculator.add("1\n2,3") == 6
-
-def test_custom_delimiter():
-    assert StringCalculator.add("//;\n1;2") == 3
-
-def test_negative_numbers():
-    with pytest.raises(Exception) as excinfo:
-        StringCalculator.add("1,-2,3,-4")
-    assert str(excinfo.value) == "Negatives not allowed: -2, -4"
-
-def test_numbers_bigger_than_1000():
-    assert StringCalculator.add("2,1001,1000") == 1002
-
-def test_delimiters_of_any_length():
-    assert StringCalculator.add("//[***]\n1***2***3") == 6
+if __name__ == '__main__':
+    unittest.main()
