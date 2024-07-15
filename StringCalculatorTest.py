@@ -1,36 +1,25 @@
-import unittest
-from StringCalculator import add  # Assuming add function is implemented in StringCalculator module
+def test_single_number():
+    assert StringCalculator.add("1") == 1
 
-class TestStringCalculator(unittest.TestCase):
-        
-    def test_expectZeroForEmptyInput(self):
-        self.assertEqual(add(""), 0)
-                
-    def test_expectZeroForSingleZero(self):
-        self.assertEqual(add("0"), 0)
-                
-    def test_expectSumForTwoNumbers(self):
-        self.assertEqual(add("1,2"), 3)
-                
-    def test_ignoreNumbersGreaterThan1000(self):
-        self.assertEqual(add("1,1001"), 1)
-                
-    def test_expectSumWithCustomDelimiter(self):
-        self.assertEqual(add("//;\n1;2"), 3)
-                
-    def test_expectSumWithNewlineDelimiter(self):
-        self.assertEqual(add("1\n2,3"), 6)
+def test_two_numbers():
+    assert StringCalculator.add("1,2") == 3
 
-    def test_negativeNumbersNotAllowed(self):
-        with self.assertRaises(ValueError) as context:
-            add("-1,2,-3")
-        self.assertEqual(str(context.exception), "negatives not allowed: -1, -3")
+def test_multiple_numbers():
+    assert StringCalculator.add("1,2,3,4,5") == 15
 
-    def test_customDelimiterOfAnyLength(self):
-        self.assertEqual(add("//[***]\n1***2***3"), 6)
+def test_newline_delimiters():
+    assert StringCalculator.add("1\n2,3") == 6
 
-    def test_multipleCustomDelimiters(self):
-        self.assertEqual(add("//[*][%]\n1*2%3"), 6)
+def test_custom_delimiter():
+    assert StringCalculator.add("//;\n1;2") == 3
 
-if __name__ == '__main__':
-    unittest.main()
+def test_negative_numbers():
+    with pytest.raises(Exception) as excinfo:
+        StringCalculator.add("1,-2,3,-4")
+    assert str(excinfo.value) == "Negatives not allowed: -2, -4"
+
+def test_numbers_bigger_than_1000():
+    assert StringCalculator.add("2,1001,1000") == 1002
+
+def test_delimiters_of_any_length():
+    assert StringCalculator.add("//[***]\n1***2***3") == 6
